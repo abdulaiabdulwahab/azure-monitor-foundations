@@ -1,0 +1,73 @@
+{
+  "location": "canadacentral",
+  "kind": "Linux",
+  "properties": {
+    "dataSources": {
+      "performanceCounters": [
+        {
+          "name": "linuxPerformance",
+          "streams": [
+            "Microsoft-Perf"
+          ],
+          "samplingFrequencyInSeconds": 60,
+          "counterSpecifiers": [
+            "\\Processor(*)\\% Processor Time",
+            "\\Memory\\% Used Memory",
+            "\\Memory\\Used Memory MBytes",
+            "\\Logical Disk(*)\\% Free Space"
+          ]
+        }
+      ],
+      "syslog": [
+        {
+          "name": "linuxSyslog",
+          "streams": [
+            "Microsoft-Syslog"
+          ],
+          "facilityNames": [
+            "auth",
+            "authpriv",
+            "cron",
+            "daemon",
+            "kern",
+            "syslog",
+            "user"
+          ],
+          "logLevels": [
+            "Warning",
+            "Error",
+            "Critical",
+            "Alert",
+            "Emergency"
+          ]
+        }
+      ]
+    },
+    "destinations": {
+      "logAnalytics": [
+        {
+          "workspaceResourceId": "/subscriptions/dd42e208-0d56-40ad-acfd-725d61b861d0/resourceGroups/rg-production-monitoring/providers/Microsoft.OperationalInsights/workspaces/law-production-monitoring",
+          "name": "productionWorkspace"
+        }
+      ]
+    },
+    "dataFlows": [
+      {
+        "streams": [
+          "Microsoft-Perf"
+        ],
+        "destinations": [
+          "productionWorkspace"
+        ]
+      },
+      {
+        "streams": [
+          "Microsoft-Syslog"
+        ],
+        "destinations": [
+          "productionWorkspace"
+        ]
+      }
+    ]
+  }
+}
